@@ -16,3 +16,16 @@ int A(int n, int m) {
 int C(int n, int m) {
     return fac[n] * inv[m] % mod * inv[n - m] % mod;
 }
+
+
+// 递推求组合数
+const int N = 5005;
+int M;
+int c[N][N];
+void init(){
+    fore(i, 0, N) c[i][0] = 1;
+    fore(i, 1, N) fore(j, 1, i + 1) {
+        c[i][j] = c[i - 1][j] + c[i - 1][j - 1];
+        c[i][j] %= M;
+    }
+}
