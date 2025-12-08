@@ -1,4 +1,4 @@
-#### [J. Best division](https://codeforces.com/gym/102409/problem/J)
+#### [J. Best division-Xor the graph](https://codeforces.com/gym/102409/problem/J)
 
 **题意：** 现在又一大块巧克力长度为L，存在N个分割点，你需要将他们分成四段使其最大的和最小的的差值最小
 
