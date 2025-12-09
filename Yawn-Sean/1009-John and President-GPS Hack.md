@@ -2,7 +2,11 @@
 
 **题意：** 给出一颗有n个节点的数，每个点有一个权值，你需要输出能否找到一条链，链上的所有数都可以被一个常数x整除，并且这个链的长度大于 n/2，如果找不到输出no，找到输出yes
 
-开始我想的是真的找到这个整数x，但是没必要，对所有数分解质因数后，分解出来的次数和有多少个质因数有交集都无所谓，只要有就行，所以只需要对每个质数进行判断，看看有这个质数的数能否连成一个符合要求的链
+最后找到的x一定是质数最优，可以直接看范围内所有质数是否满足条件
+
+对n个数来说，质因子次数之和最多是 $nlogM$ ，所以出现次数大于 n/2 的质数最多只有 $logM$ 个，所以复杂度是 $nlogM$ 的
+
+统计最长链可以树形dp计算，每次只算这个点往下的最长链，最后符合要求的点可以挑两条链组合在一起。这里不用考虑向上的，后续一样会被计算
 
 ```cpp[]
 void solve(){
@@ -103,36 +107,37 @@ void solve(){
             }
         }
     }
-    vector<int> from_s(n + 1), from_d(n + 1);
-    from_s[st] = from_d[ed] = 1;
+    vector<int> from(n + 1), to(n + 1);
+    from[st] = to[ed] = 1;
 
-    for(int s : node) {
-        for(auto[to, w] : p[s]) {
-            if(dis[to] - dis[s] == w)
-                from_d[to] = (from_d[to] + from_d[s]) % mod;
+    for(int u : node) {
+        for(auto[v, w] : p[u]) {
+            if(dis[v] - dis[u] == w)
+                to[v] = (to[v] + to[u]) % mod;
         }
     }
 
     reverse(node.begin(), node.end());
-    for(int s : node) {
-        for(auto[to, w] : p[s]) {
-            if(dis[s] - dis[to] == w)
-                from_s[to] = (from_s[to] + from_s[s]) % mod;
+    for(int u : node) {
+        for(auto[v, w] : p[u]) {
+            if(dis[u] - dis[v] == w)
+                from[v] = (from[v] + from[u]) % mod;
         }
     }
 
     if(dis[st] == T) {
-        cout << from_d[st] << endl;
+        cout << to[st] << endl;
         return;
     }
 
     int ans = 0;
     fore(u, 1, n + 1) {
-        if(from_s[u] == 0) continue;
+        if(from[u] == 0) continue;
         for(auto[v, w] : p[u]) {
             if(dis[st] - dis[u] + w + dis[v] == T && u != ed)
-                ans = (ans + from_s[u] * from_d[v]) % mod;
+                ans = (ans + from[u] * to[v]) % mod;
         }
+        // 这里细节是到了终点不能再折返，确定u, v是通过走最短路到达的
     }
     cout << ans << endl;
 }
