@@ -1,14 +1,14 @@
-constexpr i64 P = 998244353;
+constexpr int P = 998244353;
 
 class Matrix {
 private:
 	int size_;
-	std::vector<std::vector<i64>> mat;
+	std::vector<std::vector<int>> mat;
 
 public:
-	Matrix(int n, i64 a = 0) : size_(n), mat(n, std::vector<i64>(n, a)) {}
+	Matrix(int n, int a = 0) : size_(n), mat(n, std::vector<int>(n, a)) {}
 
-	Matrix(const std::vector<std::vector<i64>>& a) : size_(a.size()), mat(a) {}
+	Matrix(const std::vector<std::vector<int>>& a) : size_(a.size()), mat(a) {}
 
     Matrix(const Matrix& m) : size_(m.size()), mat(m.mat) {}
 
@@ -25,19 +25,14 @@ public:
 				}
 			}
 		}
-
 		return tmp;
 	}
 
-	void operator*=(const Matrix& m) {
-		(*this) = (*this) * m;
-	}
-	i64& operator()(int i, int j) {
-		return mat[i][j];
-	}
+	void operator*=(const Matrix& m) {(*this) = (*this) * m;}
+	int& operator()(int i, int j) {return mat[i][j];}
 };
 
-Matrix MatrixModPow(Matrix m, i64 k) {
+Matrix MatrixModPow(Matrix m, int k) {
 	Matrix res(m.size());
 	for (int i = 0; i < m.size(); i++) {
 		res(i, i) = 1;
