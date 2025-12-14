@@ -22,10 +22,27 @@ int Catalan(int n) {  // 卡特兰数
     else return C(n * 2, n) * fpow(n + 1, mod - 2) % mod;
 }
 
+int Catalan(int n, int mod) {  // when mod is not prime
+    vector<int> cnt(n * 2, 0);
+    fore(i, 2, n + 1) cnt[i] = -1;
+    fore(i, n + 2, n * 2 + 1) cnt[i] = 1;
+    for(int i = n * 2; i >= 2; i--) {
+        if(lpf[i] == 0) continue;
+        cnt[lpf[i]] += cnt[i];
+        cnt[i / lpf[i]] += cnt[i];
+        cnt[i] = 0;
+    }
+    int ans = 0;
+    fore(i, 2, n * 2 + 1) {
+        if(cnt[i] == 0) continue;
+        ans = ans * fpow(i, cnt[i], mod) % mod;
+    }
+    return ans;
+}
 
-// 递推求组合数，适用于无法找到逆元时
+
 const int N = 5005;
-int c[N][N];
+int c[N][N];  // when mod is not prime
 void init(){
     fore(i, 0, N) c[i][0] = 1;
     fore(i, 1, N) fore(j, 1, i + 1) {
