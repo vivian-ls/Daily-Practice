@@ -1,5 +1,3 @@
-```cpp[]
-
 vector<int> tmp = arr;
 sort(tmp.begin(), tmp.end());
 tmp.erase(unique(tmp.begin(), tmp.end()), tmp.end());
@@ -31,7 +29,3 @@ public:
         return ans;
     }
 };
-
-```
-
-📖 树状数组的形态就是x和它的父亲x + lowbit(x)相连
