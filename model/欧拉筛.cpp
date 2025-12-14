@@ -1,12 +1,9 @@
 vector<int> prime;
-vector<int> lpf;  // Least Prime Factor
+vector<int> lpf;  // if i is prime, lpf[i] = 0. but lpf[1] = lpf[0] = 0!
 void sieve(int n) {
     lpf.resize(n + 1, 0);
     fore(i, 2, n + 1) {
-        if(lpf[i] == 0) {
-            prime.emplace_back(i);
-            lpf[i] = i;
-        }
+        if(lpf[i] == 0) prime.emplace_back(i);
         for(int p : prime) {
             if((ll)i * p > n) break;
             lpf[i * p] = p;
@@ -15,12 +12,12 @@ void sieve(int n) {
     }
 }
 
-bool is_prime(int n) {
-    if(n <= 1) return false;
-    else return lpf[n] == n;
+bool is_prime(int x) {
+    if(x <= 1) return false;
+    else return lpf[x] == 0;
 }
 
-vector<pii> fat(int x) {  // factorize
+vector<pii> fat(int x) {
     vector<pii> ans;
     while(x > 1) {
         int p = lpf[x];
