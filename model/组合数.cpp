@@ -17,15 +17,19 @@ int C(int n, int m) {
     return fac[n] * inv[m] % mod * inv[n - m] % mod;
 }
 
+int Catalan(int n) {  // 卡特兰数
+    if(n == 0) return 1;
+    else return C(n * 2, n) * fpow(n + 1, mod - 2) % mod;
+}
 
-// 递推求组合数
+
+// 递推求组合数，适用于无法找到逆元时
 const int N = 5005;
-int M;
 int c[N][N];
 void init(){
     fore(i, 0, N) c[i][0] = 1;
     fore(i, 1, N) fore(j, 1, i + 1) {
         c[i][j] = c[i - 1][j] + c[i - 1][j - 1];
-        c[i][j] %= M;
+        c[i][j] %= mod;
     }
 }
