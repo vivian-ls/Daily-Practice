@@ -1,9 +1,9 @@
-int fpow(int a, int b, int mod) {
-    if(b < 0) return 0;
-    int ans = 1;
-    while (b) { if (b & 1) ans = ans * a % mod; a = a * a % mod; b >>= 1;}
-    return ans;
-}
+// int fpow(int a, int b, int mod) {
+//     if(b < 0) return 0;
+//     int ans = 1;
+//     while (b) { if (b & 1) ans = ans * a % mod; a = a * a % mod; b >>= 1;}
+//     return ans;
+// }
 
 const int N = 2e6;
 int fac[N + 5], finv[N + 5];
@@ -25,6 +25,25 @@ int Catalan(int n) {  // 卡特兰数
     if(n == 0) return 1;
     else return C(n * 2, n) * fpow(n + 1, mod - 2, mod) % mod;
 }
+
+int Catalan(int n, int mod) {  // when mod is not prime
+    vector<int> cnt(n * 2, 0);
+    fore(i, 2, n + 1) cnt[i] = -1;
+    fore(i, n + 2, n * 2 + 1) cnt[i] = 1;
+    for(int i = n * 2; i >= 2; i--) {
+        if(is_prime(i)) continue;
+        cnt[lpf[i]] += cnt[i];
+        cnt[i / lpf[i]] += cnt[i];
+        cnt[i] = 0;
+    }
+    int ans = 0;
+    fore(i, 2, n * 2 + 1) {
+        if(cnt[i] == 0) continue;
+        ans = ans * fpow(i, cnt[i], mod) % mod;
+    }
+    return ans;
+}
+
 void init(){
     fac[0] = finv[0] = 1;
     fore(i, 1, N + 1) fac[i] = fac[i - 1] * i % mod;
@@ -33,13 +52,12 @@ void init(){
         finv[i] = finv[i + 1] * (i + 1) % mod;
 }
 
-
-const int N = 5005;
-int c[N][N];  // when mod is not prime
-void init(){
-    fore(i, 0, N) c[i][0] = 1;
-    fore(i, 1, N) fore(j, 1, i + 1) {
-        c[i][j] = c[i - 1][j] + c[i - 1][j - 1];
-        c[i][j] %= mod;
-    }
-}
+// const int N = 5005;
+// int c[N][N];  // when mod is not prime
+// void init(){
+//     fore(i, 0, N) c[i][0] = 1;
+//     fore(i, 1, N) fore(j, 1, i + 1) {
+//         c[i][j] = c[i - 1][j] + c[i - 1][j - 1];
+//         c[i][j] %= mod;
+//     }
+// }
