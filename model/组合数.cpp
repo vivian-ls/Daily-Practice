@@ -26,23 +26,23 @@ int Catalan(int n) {  // 卡特兰数
     else return C(n * 2, n) * fpow(n + 1, mod - 2, mod) % mod;
 }
 
-int Catalan(int n, int mod) {  // when mod is not prime
-    vector<int> cnt(n * 2, 0);
-    fore(i, 2, n + 1) cnt[i] = -1;
-    fore(i, n + 2, n * 2 + 1) cnt[i] = 1;
-    for(int i = n * 2; i >= 2; i--) {
-        if(is_prime(i)) continue;
-        cnt[lpf[i]] += cnt[i];
-        cnt[i / lpf[i]] += cnt[i];
-        cnt[i] = 0;
-    }
-    int ans = 0;
-    fore(i, 2, n * 2 + 1) {
-        if(cnt[i] == 0) continue;
-        ans = ans * fpow(i, cnt[i], mod) % mod;
-    }
-    return ans;
-}
+// int Catalan(int n, int mod) {  // when mod is not prime
+//     vector<int> cnt(n * 2, 0);
+//     fore(i, 2, n + 1) cnt[i] = -1;
+//     fore(i, n + 2, n * 2 + 1) cnt[i] = 1;
+//     for(int i = n * 2; i >= 2; i--) {
+//         if(is_prime(i)) continue;
+//         cnt[lpf[i]] += cnt[i];
+//         cnt[i / lpf[i]] += cnt[i];
+//         cnt[i] = 0;
+//     }
+//     int ans = 0;
+//     fore(i, 2, n * 2 + 1) {
+//         if(cnt[i] == 0) continue;
+//         ans = ans * fpow(i, cnt[i], mod) % mod;
+//     }
+//     return ans;
+// }
 
 void init(){
     fac[0] = finv[0] = 1;
