@@ -137,11 +137,11 @@ private:
 
 
 struct Tag {
-	i64 val;
+	int val;
 	bool status = false;
 	
 	Tag() : val(0) {}
-	Tag(i64 v) : val(v), status(true) {}
+	Tag(int v) : val(v), status(true) {}
 	
 	void Apply(const Tag& t) {
 		if (!t.status) {
@@ -157,10 +157,10 @@ struct Tag {
 
 struct Info {
 	int l, r;
-	i64 val;
+	int val;
 	
 	Info() : l(0), r(0), val(0) {}
-	Info(int x, i64 v) : l(x), r(x), val(v) {}
+	Info(int x, int v) : l(x), r(x), val(v) {}
 	
 	void Apply(const Tag& t) {
 		if (!t.status) {
@@ -181,7 +181,5 @@ struct Info {
 		return res;
 	}
 };
-
-LazySegmentTree seg(vector<int>(n + 1));
 
 
