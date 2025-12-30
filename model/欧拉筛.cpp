@@ -1,5 +1,5 @@
 vector<int> prime;
-vector<int> lpf;  // if i is prime, lpf[i] = 0
+vector<int> lpf;  // least prime fac
 void sieve(int n) {
     lpf.resize(n + 1);
     fore(i, 1, n + 1) lpf[i] = i;
