@@ -18,7 +18,7 @@ bool is_prime(int x) {
     else return lpf[x] == x;
 }
 
-vector<pii> fat(int x) {
+vector<pii> Fat(int x) {
     vector<pii> ans;
     while(x > 1) {
         int p = lpf[x];
