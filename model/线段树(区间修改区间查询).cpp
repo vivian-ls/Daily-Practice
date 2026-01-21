@@ -1,39 +1,27 @@
 class SegTree{
-public:
+private:
     int n;
-    vector<int> info, add, a;
-    SegTree(int n) : n(n), info((n << 2) + 1, 0), add((n << 2) + 1, 0), a(n + 1) {}
+    vector<int> info, add;
 
-    void build(int i, int l, int r) {
-        if(l == r) {
-            info[i] = a[l];
-            return;
-        }else{
-            int mid = (l + r) >> 1;
-            build(i << 1, l, mid);
-            build(i << 1 | 1, mid + 1, r);
-            up(i);
-        }
-    }
     void up(int i) {
-        info[i] = info[i << 1] + info[i << 1 | 1];
+        info[i] = max(info[i << 1], info[i << 1 | 1]);
     }
-    void down(int i, int ln, int rn) {
+    void down(int i) {
         if(add[i] == 0) return;
-        upgrade(i << 1, add[i], ln);
-        upgrade(i << 1 | 1, add[i], rn);
+        upgrade(i << 1, add[i]);
+        upgrade(i << 1 | 1, add[i]);
         add[i] = 0;
     }
-    void upgrade(int i, int val, int cnt) {
+    void upgrade(int i, int val) {
         add[i] += val;
-        info[i] += val * cnt;
+        info[i] += val;
     }
     void push(int jobl, int jobr, int jobv, int l, int r, int i) {
         if(jobl <= l && jobr >= r) {
-            upgrade(i, jobv, r - l + 1);
+            upgrade(i, jobv);
         }else{
             int mid = (l + r) >> 1;
-            down(i, mid - l + 1, r - mid);
+            down(i);
             if(jobl <= mid)
                 push(jobl, jobr, jobv, l, mid, i << 1);
             if(jobr > mid)
@@ -46,11 +34,17 @@ public:
         if(jobl <= l && jobr >= r)
             return info[i];
         int mid = (l + r) >> 1;
-        down(i, mid - l + 1, r - mid);
+        down(i);
         if(jobl <= mid)
-            ans += query(jobl, jobr, l, mid, i << 1);
+            ans = max(query(jobl, jobr, l, mid, i << 1), ans);
         if(jobr > mid)
-            ans += query(jobl, jobr, mid + 1, r, i << 1 | 1);
+            ans = max(query(jobl, jobr, mid + 1, r, i << 1 | 1), ans);
         return ans;
     }
+public:
+    SegTree(int n) : 
+    n(n), info((n << 2) + 1, 0), add((n << 2) + 1, 0) {}
+
+    void push(int l, int r, int v) {return push(l, r, v, 1, n, 1); }
+    int query(int l, int r) {return query(l, r, 1, n, 1); }
 };
