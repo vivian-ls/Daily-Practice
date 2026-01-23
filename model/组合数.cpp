@@ -23,9 +23,9 @@ public:
         return ans;
     }
 
-    int inv(int n) {
-        return fpow(n, mod - 2);
-    }
+    int getfac(int n) { return fac[n]; }
+    int getfinv(int n) { return finv[n]; }
+    int inv(int n) { return fpow(n, mod - 2); }
 
     int A(int n, int m) {
         if(n < 0 || m < 0 || m > n) return 0;
