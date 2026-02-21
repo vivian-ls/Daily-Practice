@@ -18,13 +18,28 @@ bool is_prime(int x) {
     else return lpf[x] == x;
 }
 
-vector<pii> Fat(int x) {
+vector<pii> fat_lpf(int n) {
     vector<pii> ans;
-    while(x > 1) {
-        int p = lpf[x];
+    while(n > 1) {
+        int p = lpf[n];
         int cnt = 0;
-        while(x % p == 0) x /= p, cnt += 1;
+        while(n % p == 0) n /= p, cnt += 1;
         ans.emplace_back(p, cnt);
     }
+    return ans;
+}
+
+vector<pii> fat_s(int n) {
+    vector<pii> ans;
+    int cnt = 0;
+    while(n % 2 == 0) n /= 2, cnt++;
+    if(cnt) ans.emplace_back(2, cnt);
+    for(int p = 3; p * p <= n; p += 2) {
+        if(n % p != 0) continue;
+        int cnt = 0;
+        while(n % p == 0) n /= p, cnt++;
+        ans.emplace_back(p, cnt);
+    }
+    if(n > 1) ans.emplace_back(n, 1);
     return ans;
 }
