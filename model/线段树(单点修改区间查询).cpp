@@ -2,7 +2,7 @@ class Seg{
 public:
     int n;
     vector<int> a, info;
-    Seg(int n) : n(n), info((n << 2) + 1, 1), a(n + 1, 1) {}
+    Seg(int n) : n(n), info((n << 2) + 1), a(n + 1, 1) {}
 
     void build(int i, int l, int r) {
         if(l == r)
@@ -25,7 +25,7 @@ public:
         else set(pos, val, mid + 1, r, i << 1 | 1);
         info[i] = info[i << 1] * info[i << 1 | 1];
     }
-    void set(int pos, int val) {return set(pos, val, 1, n, 1);}
+    void set(int pos, int val) { set(pos, val, 1, n, 1);}
     int query(int jobl, int jobr, int l, int r, int i) {
         if(jobl <= l && jobr >= r) 
             return info[i];
