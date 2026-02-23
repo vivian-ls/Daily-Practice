@@ -1,3 +1,4 @@
+// 此线段树维护区间加，查询区间和
 class SegTree{
 private:
     int n;
