@@ -47,4 +47,5 @@ public:
 
     void push(int l, int r, int v) {return push(l, r, v, 1, n, 1); }
     int query(int l, int r) {return query(l, r, 1, n, 1); }
+    int get(int pos) {return query(pos, pos);}
 };
