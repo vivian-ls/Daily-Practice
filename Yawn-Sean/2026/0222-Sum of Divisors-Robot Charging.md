@@ -47,7 +47,17 @@ $lcm(n, p) = n \times \frac{n + v}{g}$
 这里的 $g$ 一定是 $n$ 的因子，要想后面这个分数是整数，就必须有 $v$ 也是 $g$ 的倍数，这里想要最小化分数，自然 $v = g$ 了，同时 $g$ 越大越好，所以 $g$ 就是 $n$ 的最大的因子，所以找出这个因子也就找到了这个 $p$
 
 ```cpp
-
+void solve(){
+    int n, k;
+    cin >> n >> k;
+    int ans = 0;
+    for(int i = 1; i * i <= n; i++) {
+        if(n % i != 0) continue;
+        if(i <= k) ans = max(ans, i);
+        if(n / i <= k) ans = max(ans, n / i);
+    }
+    cout << n + ans << endl;
+}
 ```
 
 
