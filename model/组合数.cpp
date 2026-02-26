@@ -6,7 +6,7 @@ private:
     void init(){
         fac[0] = finv[0] = 1;
         fore(i, 1, N + 1) fac[i] = fac[i - 1] * i % mod;
-        finv[N] = fpow(fac[N], mod - 2);
+        finv[N] = this->fpow(fac[N], mod - 2);
         for (int i = N - 1; i >= 1; i--)
             finv[i] = finv[i + 1] * (i + 1) % mod;
     }
@@ -25,7 +25,7 @@ public:
 
     int getfac(int n) { return fac[n]; }
     int getfinv(int n) { return finv[n]; }
-    int inv(int n) { return fpow(n, mod - 2); }
+    int inv(int n) { return this->fpow(n, mod - 2); }
 
     int A(int n, int m) {
         if(n < 0 || m < 0 || m > n) return 0;
@@ -39,7 +39,7 @@ public:
 
     int Catalan(int n) {  // 卡特兰数
         if(n == 0) return 1;
-        else return C(n * 2, n) * inv(n + 1) % mod;
+        else return C(n * 2, n) * this->inv(n + 1) % mod;
     }
 
     // int Catalan(int n, int mod) {  // when mod is not prime
