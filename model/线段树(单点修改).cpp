@@ -25,13 +25,10 @@ private:
         info[i] = max(info[i << 1], info[i << 1 | 1]);
     }
     int query(int jobl, int jobr, int l, int r, int i) {
-        if(jobl <= l && jobr >= r) 
-        return info[i];
+        if(jobl <= l && jobr >= r) return info[i];
         int mid = (l + r) >> 1, left = 0, right = 0;
-        if(jobl <= mid)
-        left = query(jobl, jobr, l, mid, i << 1);
-        if(jobr > mid)
-        right = query(jobl, jobr, mid + 1, r, i << 1 | 1);
+        if(jobl <= mid) left = query(jobl, jobr, l, mid, i << 1);
+        if(jobr > mid) right = query(jobl, jobr, mid + 1, r, i << 1 | 1);
         return max(left, right);
     }
 public:
