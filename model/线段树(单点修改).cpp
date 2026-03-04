@@ -14,6 +14,7 @@ private:
         }
     }
     void set(int pos, int val, int l, int r, int i) {  
+        if(pos < 1 || pos > n) return;
         if(l == r) {
             a[pos] = val;
             info[i] = val;
