@@ -1,5 +1,5 @@
 // 此线段树维护的是区间最大值
-class Seg{
+class SegTree{
 private:
     int n;
     vector<int> a, info;
@@ -32,8 +32,8 @@ private:
         return max(left, right);
     }
 public:
-    Seg(int n) : n(n), info((n << 2) + 1), a(n + 1, 0) {}
+    SegTree(int n) : n(n), info((n << 2) + 1), a(n + 1, 0) {}
     void set(int pos, int val) { set(pos, val, 1, n, 1);}
     int query(int jobl, int jobr) {return query(jobl, jobr, 1, n, 1);}
-    int get(int pos) {return query(pos, pos);}
+    int get(int pos) {return a[pos];}
 };
