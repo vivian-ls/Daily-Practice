@@ -1,14 +1,16 @@
-int deep[500005], st[500005][22 + 1];
+const int MAXN = 2e5;
+int deep[MAXN + 5], st[MAXN + 5][22 + 1];
 class LCA{
-public:
+private:
     int n, maxp;
     vector<vector<int>> adj;
-
+    
+public:
     LCA(int n) : n(n) {
         maxp = (int)log2(n);
         adj.resize(n + 1);
     }
-    void add(int u, int v) adj[u].emplace_back(v);
+    void add(int u, int v) { adj[u].emplace_back(v); }
 
     void dfs(int s, int f) {
         deep[s] = deep[f] + 1;
