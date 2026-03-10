@@ -1,17 +1,21 @@
 struct DSU {
-    vector<int> f;
-    DSU(int n) : f(n + 1) {
-        iota(f.begin(), f.end(), 0);
+private:
+    vector<int> fa, sz;
+public:
+    DSU(int n) : fa(n + 1), sz(n + 1, 1) {
+        iota(fa.begin(), fa.end(), 0);
     }
     int find(int x) {
-        while (x != f[x]) x = f[x] = f[f[x]];
+        while (x != fa[x]) x = fa[x] = fa[fa[x]];
         return x;
     }
     bool merge(int x, int y) { 
         x = find(x);
         y = find(y);
         if (x == y) return false;
-        f[y] = x;
+        fa[y] = x;
+        sz[x] += sz[y];
         return true;
     }
+    int size(int x) {return sz[find(x)]; }
 };
