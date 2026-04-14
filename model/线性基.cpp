@@ -58,9 +58,8 @@ public:
             }
             if((basis[len] >> i) & 1) {
                 for(int j = 1; j <= n; j++) {
-                    if(j != len && ((basis[j] >> i) & 1)) {
+                    if(j != len && ((basis[j] >> i) & 1))
                         basis[j] ^= basis[len];
-                    }
                 }
                 len++;
             }
@@ -71,17 +70,15 @@ public:
 
     // 判断 x 是否能被当前线性基表示
     bool check(int x) {
-        for(int i = 1; i <= len; i++) {
+        for(int i = 1; i <= len; i++)
             x = min(x, x ^ basis[i]);
-        }
         return x == 0;
     }
 
     int maxVal() {
         int ans = 0;
-        for(int i = 1; i <= len; i++) {
+        for(int i = 1; i <= len; i++) 
             ans = max(ans, ans ^ basis[i]);
-        }
         return ans;
     }
 
@@ -93,20 +90,11 @@ public:
 
         int ans = 0;
         for(int i = 1; i <= len; i++) {
-            if((k >> (i - 1)) & 1LL) {
+            if((k >> (i - 1)) & 1LL)
                 ans ^= basis[len - i + 1]; // 按主元从低到高拼
-            }
         }
         return ans;
     }
-
-    // 第 k 小非0不同异或值（1-based）
-    int kth_nonzero(int k) {
-        if(k < 1) return -1;
-        if(len < 63 && k > (1LL << len) - 1) return -1;
-        return kth(k + 1);
-    }
-
     int rank() { return len; }
     bool hasZero() { return zero; }
 };
