@@ -6,9 +6,10 @@ private:
     vector<int> belong; // 节点 i 属于哪个强连通分量
     vector<vector<int>> p;
     stack<int> st;
+    vector<int> sz;
 
 public:
-    SCC(int n) : n(n), dfn(n + 1), low(n + 1), belong(n + 1), p(n + 1) {}
+    SCC(int n) : n(n), dfn(n + 1), low(n + 1), belong(n + 1), p(n + 1), sz(n + 1) {}
     
     void add(int u, int v) {
         p[u].emplace_back(v);
@@ -31,6 +32,7 @@ public:
             do{
                 cur = st.top(); st.pop();
                 belong[cur] = cnt_scc;
+                sz[cnt_scc]++;
             }while(cur != u);
         }
     }
@@ -43,4 +45,5 @@ public:
 
     int find(int x) { return belong[x]; }
     int getcnt() { return cnt_scc; }
+    int size(int x) { return sz[x]; }
 };
