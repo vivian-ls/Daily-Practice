@@ -9,11 +9,30 @@ private:
     vector<int> sz;
 
 public:
-    SCC(int n) : n(n), dfn(n + 1), low(n + 1), belong(n + 1), p(n + 1), sz(n + 1) {}
+
+    SCC(int n) : n(n), dfn(n + 1), low(n + 1), belong(n + 1), p(n + 1), sz(n + 1) {
+    }
     
     void add(int u, int v) {
         p[u].emplace_back(v);
     }
+
+    // // 用于 2-SAT 建图时建议使用下面的加边方式
+    // void add(int x, int a, int y, int b) {
+    //     if(a == 1 && b == 1) {
+    //         p[x + n].emplace_back(y);
+    //         p[y + n].emplace_back(x);
+    //     }else if(a == 1 && b == 0) {
+    //         p[x + n].emplace_back(y + n);
+    //         p[y].emplace_back(x);
+    //     }else if(a == 0 && b == 1) {
+    //         p[x].emplace_back(y);
+    //         p[y + n].emplace_back(x + n);
+    //     }else {
+    //         p[x].emplace_back(y + n);
+    //         p[y].emplace_back(x + n);
+    //     }
+    // }
 
     void tarjan(int u) {
         dfn[u] = low[u] = ++cntn;
